@@ -1,5 +1,6 @@
 #include <stdio.h>
 #include <stdlib.h>
+#include <string.h>
 
 typedef struct lista{
     int dni;
@@ -12,7 +13,7 @@ typedef struct lista{
 
 void cargar(nodo *p);
 void mostrar(nodo *p);
-//void pasar(nodo *p);
+void pasar(nodo *p,nodo *n);
 
 
 
@@ -20,9 +21,10 @@ void mostrar(nodo *p);
 int main()
 {
     nodo *puntero=(nodo *)malloc(sizeof(nodo));
+    nodo *negativos=(nodo *)malloc(sizeof(nodo));
     int opcion;
 
-    printf("Ingrese que desea hacer: ");
+    printf("Ingrese que desea hacer: \n");
     scanf("%d",&opcion);
 
 
@@ -34,13 +36,16 @@ int main()
         }
         else if (opcion==2)
         {
+            printf("Los normales son:\n");
             mostrar(puntero);
+            printf("Los filtrados son:\n");
+            mostrar(negativos);
         }
         else if (opcion==3)
         {
-            // pasar(puntero);
+            pasar(puntero,negativos);
         }
-        printf("Ingrese que desea hacer: ");
+        printf("Ingrese que desea hacer: \n");
         scanf("%d",&opcion);    
         
     }
@@ -54,7 +59,7 @@ void cargar(nodo *p){
     if (p->dni==0)
     {
         p->sig=NULL;
-        printf("Termino de cargar");
+        printf("Termino de cargar\n");
     }
     else{        
         printf("Ingrese el nombre: ");
@@ -70,7 +75,7 @@ void cargar(nodo *p){
 void mostrar(nodo *p){
     if (p->sig==NULL)
     {
-        printf("Fin de lista");
+        printf("Fin de lista\n");
     }
     else
     {
@@ -78,4 +83,24 @@ void mostrar(nodo *p){
         mostrar(p->sig);
     }
     
+}
+
+void pasar(nodo *p,nodo *n){
+    while (p->sig!=NULL)
+    {
+        if (p->saldo<100)
+        {
+            n->dni=p->dni;
+            strcpy(n->nombre,p->nombre);
+            n->saldo=p->saldo;
+            n->sig=(nodo *)malloc(sizeof(nodo));
+            n=n->sig;
+
+        }
+        p=p->sig;
+        
+    }
+    n->sig=NULL;
+    
+
 }
